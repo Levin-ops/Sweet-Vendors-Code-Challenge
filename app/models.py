@@ -1,12 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-
-class Vendor(db.Model):
-    __tablename__ = 'vendor'
-
-    id = db.Column(db.Integer, primary_key=True)
-    from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL
+from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL
 from sqlalchemy.orm import relationship, validates
 from random import choices, randint
 from datetime import datetime
