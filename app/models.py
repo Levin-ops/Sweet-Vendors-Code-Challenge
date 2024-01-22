@@ -12,7 +12,9 @@ class Vendor(db.Model):
     name = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now(), onupdate=datetime.utcnow)
+    # Relationships
     vendor_sweets = db.relationship('Vendor_Sweets', back_populates='vendor')
+    sweets = db.relationship('Sweet', secondary='vendor_sweets', back_populates='vendors')
 
     def __repr__(self):
         return f'<vendor {self.name}>'
@@ -26,9 +28,14 @@ class Vendor_Sweets(db.Model):
     sweet_id = db.Column(db.Integer, db.ForeignKey('sweets.id'), nullable=False)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendors.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now(), onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now(), onupdate=datetime.utcnow) 
+    # relationships
     sweet = db.relationship('Sweet', back_populates='vendor_sweets')
     vendor = db.relationship('Vendor', back_populates='vendor_sweets')
+
+    def __repr__(self):
+        return f'<price {self.price}, vendor_id {self.vendor_id}, sweet_id {self.sweet_id}'
+    
 
     @validates('price')
     def validates_price(self, key, price):
@@ -40,6 +47,7 @@ class Vendor_Sweets(db.Model):
             raise ValueError("Price cannot be a negative number")
 
         return price
+    
 
 class Sweet(db.Model):
     __tablename__ = 'sweets'
@@ -48,5 +56,7 @@ class Sweet(db.Model):
     name = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now(), onupdate=datetime.utcnow)
+    # relationships
     vendor_sweets = db.relationship('Vendor_Sweets', back_populates='sweet')
+    vendors = db.relationship('Vendor', secondary='vendor_sweets', back_populates='sweets')
 

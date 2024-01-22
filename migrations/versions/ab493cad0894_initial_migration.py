@@ -1,8 +1,8 @@
-"""Corrected Vendor_Sweets foreign key
+"""initial migration
 
-Revision ID: 3ff5e43c1f6f
-Revises: 8ec386b369c8
-Create Date: 2024-01-21 00:40:39.982054
+Revision ID: ab493cad0894
+Revises: 
+Create Date: 2024-01-22 08:13:30.660543
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3ff5e43c1f6f'
-down_revision = '8ec386b369c8'
+revision = 'ab493cad0894'
+down_revision = None
 branch_labels = None
 depends_on = None
 

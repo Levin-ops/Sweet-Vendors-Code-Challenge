@@ -105,7 +105,7 @@ class SweetsByID(Resource):
             )
             return response
 
-api.add_resource(SweetsByID,'/sweets/<int:sweet_id')
+api.add_resource(SweetsByID,'/sweets/<int:sweet_id>')
 
 class VendorSweet(Resource):
     def post(self):
