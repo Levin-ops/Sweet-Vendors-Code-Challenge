@@ -55,9 +55,7 @@ api.add_resource(Home, "/")
 class VendorResource(Resource):
     def get(self):
         vendors = Vendor.query.all()
-        vendors_dict = vendors.to_dict()
-        response = make_response(jsonify(vendors_dict), 200)
-        return response
+        return jsonify(vendors_schema.dump(vendors))
 
 
 api.add_resource(VendorResource, "/vendors")
@@ -78,17 +76,13 @@ class VendorByID(Resource):
 
 api.add_resource(VendorByID, "/vendors/<int:vendor_id>")
 
-class Sweet(Resource):
+class SweetResource(Resource):
     def get(self):
         sweets = Sweet.query.all()
-        sweets_dict = sweets.to_dict()
-
-        response = make_response(
-            jsonify(sweets_schema.dump(sweets_dict))
-        )
-        return response
+        print(sweets)
+        return jsonify(sweets_schema.dump(sweets))
     
-api.add_resource(Sweet, '/sweets')
+api.add_resource(SweetResource, '/sweets')
     
 class SweetsByID(Resource):
     def get(self, sweet_id):
@@ -150,4 +144,6 @@ api.add_resource(VendorSweetByID, '/vendor_sweets/<int:vendor_sweet_id>')
 
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(port=5555, debug=True)
